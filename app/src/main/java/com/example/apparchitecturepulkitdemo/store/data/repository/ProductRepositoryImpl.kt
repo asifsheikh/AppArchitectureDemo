@@ -12,6 +12,8 @@ class ProductRepositoryImpl(
     override suspend fun getProducts(): Either<NetworkError, List<Product>> {
         return Either.catch {
             productService.getProducts()
-        }.mapLeft { it.toNetworkError() }
+        }.mapLeft { throwable ->
+            throwable.toNetworkError()
+        }
     }
 }
